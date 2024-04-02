@@ -33,7 +33,7 @@ if [ "$value" = "reset" ] || [ "$value" = "hardReset" ] || [ ! -d "/root/kasarOs
         rm -rf /home/starknode/*
     fi
     cd /root/
-    git clone https://github.com/KasarLabs/kasarOs && cd kasarOs && git checkout new_snapshot
+    git clone https://github.com/KasarLabs/kasarOs && cd kasarOs && git checkout roc-dev
     if ! cmp -s "/root/kasarOs/rc.local" "/etc/rc.local"; then
         cp "/root/kasarOs/rc.local" "/etc/rc.local"
         /etc/rc.local &

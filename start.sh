@@ -121,7 +121,6 @@ installJuno() {
         elif [ -e "/root/juno_mainnet_v0.9.3_519634.tar" ]; then
             rm -rf /root/juno_mainnet_v0.9.3_519634.tar
         fi
-        echo -e "test\n"
         postState "Download Mainnet"
         space=$(df -h / | awk 'NR==2{print $2}' | sed 's/[Gg]//')
         # Définir un seuil d'espace disque disponible (en GB)
@@ -165,13 +164,6 @@ installJuno() {
         --http-host 0.0.0.0 \
         --db-path /var/lib/juno \
         --eth-node wss://eth-mainnet.g.alchemy.com/v2/PLvtzl9NBacueDV0gzs9e4e3kFrj5gBo
-    #sudo docker run -d -it --name juno \
-    #    -p 6060:6060 \
-     #   -v $BASE/$client:/var/lib/juno \
-      #  nethermind/juno:v0.7.2 --http-host 0.0.0.0 --http \
-       # --http-port 6060 \
-        #--db-path /var/lib/juno \
-        #--eth-node wss://eth-mainnet.g.alchemy.com/v2/PLvtzl9NBacueDV0gzs9e4e3kFrj5gBo
     echo -e "\n\033[34mWaiting for Juno client to start... \033[m"
     updateNetwork 6060
     postState "Starting"
