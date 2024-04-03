@@ -56,11 +56,20 @@ restart_docker() {
     pid=$(pgrep myOsiris)
     sudo docker rm $(docker ps -aq)
     kill $pid
+    #sudo docker run -d -it --name juno \
+    #    -p 6060:6060 \
+    #    -v $BASE/$client:/var/lib/juno \
+    #    nethermind/juno:v0.6.0 \
+    #    --http-port 6060 \
+    #    --db-path /var/lib/juno \
+    #    --eth-node $new_url
     sudo docker run -d -it --name juno \
         -p 6060:6060 \
         -v $BASE/$client:/var/lib/juno \
-        nethermind/juno:v0.6.0 \
+        nethermind/juno \
+        --http \
         --http-port 6060 \
+        --http-host 0.0.0.0 \
         --db-path /var/lib/juno \
         --eth-node $new_url
     while ! sudo docker logs juno > /dev/null; do sleep 1; done
