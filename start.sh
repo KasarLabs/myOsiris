@@ -116,39 +116,35 @@ installJuno() {
     fi
     if [ ! -e "/root/juno/tars.lock" ]; then
 
-        if [ -e "/root/juno_mainnet_v0.7.5_449406.tar" ]; then
-            rm -rf /root/juno_mainnet_v0.7.5_449406.tar
+        if [ -e "/root/juno_mainnet_v0.6.5_313975.tar" ]; then
+            rm -rf /root/juno_mainnet_v0.6.5_313975.tar
         elif [ -e "/root/juno_mainnet_v0.9.3_519634.tar" ]; then
             rm -rf /root/juno_mainnet_v0.9.3_519634.tar
         fi
         postState "Download Mainnet"
         space=$(df -h / | awk 'NR==2{print $2}' | sed 's/[Gg]//')
-        # Définir un seuil d'espace disque disponible (en GB)
         threshold=350
 
-# Comparer l'espace disponible avec le seuil
         if (( $(echo "$space < $threshold" | bc -l) )); then
             echo -e "\nL'espace disque disponible est inférieur à $threshold GB."
-            wget -P /root/ https://juno-snapshots.nethermind.dev/mainnet/juno_mainnet_v0.7.5_449406.tar
+            wget -P /root/ https://juno-snapshots.nethermind.dev/mainnet/juno_mainnet_v0.6.5_313975.tar
             postState "Unzip Mainnet"
-            tar -xvf /root/juno_mainnet_v0.7.5_449406.tar -C /root/
-    # Insérer ici les actions à exécuter si l'espace est insuffisant
+            tar -xvf /root/juno_mainnet_v0.6.5_313975.tar -C /root/
+    
         else
             echo -e "\nL'espace disque disponible est supérieur à $threshold GB."
             wget -P /root/ https://juno-snapshots.nethermind.dev/mainnet/juno_mainnet_v0.9.3_519634.tar
             postState "Unzip Mainnet"
             tar -xvf /root/juno_mainnet_v0.9.3_519634.tar -C /root/
-    # Insérer ici les actions à exécuter si l'espace est suffisant
         fi
         sudo mv $BASE/juno_mainnet $BASE/juno
         sudo touch $BASE/juno/tars.lock
         sudo chmod 777 $BASE/juno
-        if [ -e "/root/juno_mainnet_v0.7.5_449406.tar" ]; then
-            rm -rf /root/juno_mainnet_v0.7.5_449406.tar
+        if [ -e "/root/juno_mainnet_v0.6.5_313975.tar" ]; then
+            rm -rf /root/juno_mainnet_v0.6.5_313975.tar
         elif [ -e "/root/juno_mainnet_v0.9.3_519634.tar" ]; then
             rm -rf /root/juno_mainnet_v0.9.3_519634.tar
         fi
-        #rm -rf /root/juno_mainnet_v0.6.5_313975.tar
     fi
     if [[ $rpc_key == *"infura"* ]]; then
         new_url=$(echo "$rpc_key" | sed 's|https://mainnet.infura.io/v3/|wss://mainnet.infura.io/ws/v3/|')
